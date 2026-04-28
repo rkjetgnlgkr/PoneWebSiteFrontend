@@ -211,63 +211,67 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+@import '~/assets/scss/variables';
+@import '~/assets/scss/mixins';
+
 .login-page {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  @include flex-center;
   width: 100%;
   min-height: 100vh;
 }
 
 .login-card {
-  background: #fff;
+  background: $color-bg-white;
   border-radius: 12px;
   padding: 48px 40px;
   width: 100%;
   max-width: 400px;
   box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+
+  @include respond-to(mobile) {
+    margin: 16px;
+    padding: 32px 24px;
+  }
 }
 
 .login-header {
   text-align: center;
   margin-bottom: 36px;
+
+  h2 {
+    margin: 0 0 8px;
+    font-size: 22px;
+    color: $color-text-primary;
+  }
+
+  p {
+    margin: 0;
+    color: $color-text-secondary;
+    font-size: 14px;
+  }
 }
 
 .logo {
   width: 72px;
   height: 72px;
-  background: linear-gradient(135deg, #667eea, #764ba2);
+  background: $gradient-primary;
   border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  @include flex-center;
   margin: 0 auto 16px;
-}
 
-.logo i {
-  font-size: 32px;
-  color: #fff;
-}
-
-.login-header h2 {
-  margin: 0 0 8px;
-  font-size: 22px;
-  color: #303133;
-}
-
-.login-header p {
-  margin: 0;
-  color: #909399;
-  font-size: 14px;
+  i {
+    font-size: 32px;
+    color: $color-bg-white;
+  }
 }
 
 .login-form {
   margin-top: 8px;
-}
 
-.login-form .el-form-item {
-  margin-bottom: 20px;
+  .el-form-item {
+    margin-bottom: 20px;
+  }
 }
 
 .login-btn {
@@ -276,31 +280,23 @@ export default {
   font-size: 15px;
   letter-spacing: 2px;
   margin-top: 8px;
-  background: linear-gradient(135deg, #667eea, #764ba2);
+  background: $gradient-primary;
   border: none;
-}
 
-.login-btn:hover {
-  opacity: 0.9;
+  &:hover {
+    opacity: 0.9;
+  }
 }
 
 .register-link {
   text-align: center;
   margin-top: 16px;
   font-size: 14px;
-  color: #909399;
-}
+  color: $color-text-secondary;
 
-.register-link .el-button {
-  padding: 0;
-  font-size: 14px;
-}
-
-/* RWD */
-@media (max-width: 480px) {
-  .login-card {
-    margin: 16px;
-    padding: 32px 24px;
+  .el-button {
+    padding: 0;
+    font-size: 14px;
   }
 }
 </style>

@@ -4,12 +4,13 @@
   </div>
 </template>
 
-<style scoped>
+<style lang="scss" scoped>
+@import '~/assets/scss/variables';
+@import '~/assets/scss/mixins';
+
 .login-layout {
   min-height: 100vh;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  background: $gradient-primary;
+  @include flex-center;
 }
 </style>

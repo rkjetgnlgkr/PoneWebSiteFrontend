@@ -187,26 +187,37 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+@import '~/assets/scss/variables';
+@import '~/assets/scss/mixins';
+
 .portfolio-page {
   padding: 0;
 }
 
 .page-card {
-  background: #fff;
+  background: $color-bg-white;
   border-radius: 8px;
   padding: 20px;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+
+  @include respond-to(tablet) {
+    padding: 12px;
+  }
 }
 
 .toolbar {
   margin-bottom: 16px;
   display: flex;
   gap: 10px;
+
+  @include respond-to(tablet) {
+    flex-wrap: wrap;
+  }
 }
 
 .url-link {
-  color: #409eff;
+  color: $color-primary;
   text-decoration: none;
   display: inline-block;
   max-width: 160px;
@@ -214,14 +225,14 @@ export default {
   text-overflow: ellipsis;
   white-space: nowrap;
   vertical-align: bottom;
-}
 
-.url-link:hover {
-  text-decoration: underline;
+  &:hover {
+    text-decoration: underline;
+  }
 }
 
 .empty-text {
-  color: #c0c4cc;
+  color: $color-text-placeholder;
 }
 
 .image-preview-group {
@@ -236,13 +247,13 @@ export default {
   width: 48px;
   height: 48px;
   border-radius: 4px;
-  border: 1px solid #e4e7ed;
+  border: 1px solid $color-border;
   cursor: pointer;
 }
 
 .more-badge {
-  background: #f0f0f0;
-  color: #606266;
+  background: $color-bg-badge;
+  color: $color-text-regular;
   font-size: 12px;
   padding: 2px 6px;
   border-radius: 10px;
@@ -251,38 +262,27 @@ export default {
 .delete-confirm-content {
   text-align: center;
   padding: 8px 0;
+
+  p {
+    margin: 6px 0;
+    color: $color-text-primary;
+    font-size: 14px;
+  }
 }
 
 .warning-icon {
   font-size: 48px;
-  color: #e6a23c;
+  color: $color-warning;
   margin-bottom: 12px;
   display: block;
 }
 
-.delete-confirm-content p {
-  margin: 6px 0;
-  color: #303133;
-  font-size: 14px;
-}
-
 .delete-tip {
-  color: #f56c6c !important;
+  color: $color-danger !important;
   font-size: 12px !important;
 }
 
-/* RWD */
-@media (max-width: 768px) {
-  .page-card {
-    padding: 12px;
-  }
-
-  .toolbar {
-    flex-wrap: wrap;
-  }
-}
-
-@media (max-width: 600px) {
+@include respond-to(small) {
   :deep(.el-table) {
     font-size: 12px;
   }

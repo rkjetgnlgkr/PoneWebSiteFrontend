@@ -205,15 +205,17 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+$thumb-size: 100px;
+
 :deep(.el-upload--picture-card) {
-  width: 100px;
-  height: 100px;
-  line-height: 100px;
+  width: $thumb-size;
+  height: $thumb-size;
+  line-height: $thumb-size;
 }
 
 :deep(.el-upload-list--picture-card .el-upload-list__item) {
-  width: 100px;
-  height: 100px;
+  width: $thumb-size;
+  height: $thumb-size;
 }
 </style>

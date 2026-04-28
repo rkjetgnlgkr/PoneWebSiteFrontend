@@ -1,0 +1,58 @@
+@import 'variables';
+@import 'mixins';
+
+// ─── Reset & Base ─────────────────────────────────────────────
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  height: 100%;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang TC',
+    'Helvetica Neue', Arial, sans-serif;
+  font-size: 14px;
+  color: $color-text-primary;
+  background-color: $color-bg-page;
+  -webkit-font-smoothing: antialiased;
+}
+
+// ─── Element UI overrides ────────────────────────────────────
+.el-dialog__body {
+  padding: 20px 24px;
+}
+
+.el-table th {
+  background-color: $color-bg-table !important;
+  color: $color-text-regular !important;
+  font-weight: 600;
+}
+
+// ─── Scrollbar ───────────────────────────────────────────────
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: $color-text-placeholder;
+  border-radius: 3px;
+
+  &:hover {
+    background: $color-text-secondary;
+  }
+}
+
+// ─── RWD utilities ───────────────────────────────────────────
+@include respond-to(tablet) {
+  .el-dialog {
+    width: 95% !important;
+    margin: 0 auto;
+  }
+}

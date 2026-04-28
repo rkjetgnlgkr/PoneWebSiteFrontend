@@ -1,0 +1,34 @@
+// ─── Sidebar ────────────────────────────────────────────────
+$color-sidebar-bg:     #2d3a4a;
+$color-sidebar-border: #3d4f63;
+$color-sidebar-text:   #bfcbd9;
+
+// ─── Brand gradient ─────────────────────────────────────────
+$color-primary-start: #667eea;
+$color-primary-end:   #764ba2;
+$gradient-primary: linear-gradient(135deg, $color-primary-start 0%, $color-primary-end 100%);
+
+// ─── Element UI palette ─────────────────────────────────────
+$color-primary:      #409eff;
+$color-warning:      #e6a23c;
+$color-danger:       #f56c6c;
+
+// ─── Text ────────────────────────────────────────────────────
+$color-text-primary:     #303133;
+$color-text-regular:     #606266;
+$color-text-secondary:   #909399;
+$color-text-placeholder: #c0c4cc;
+
+// ─── Background ──────────────────────────────────────────────
+$color-bg-page:   #f0f2f5;
+$color-bg-white:  #fff;
+$color-bg-table:  #f5f7fa;
+$color-bg-badge:  #f0f0f0;
+
+// ─── Border ──────────────────────────────────────────────────
+$color-border: #e4e7ed;
+
+// ─── Breakpoints ─────────────────────────────────────────────
+$bp-mobile: 480px;
+$bp-small:  600px;
+$bp-tablet: 768px;

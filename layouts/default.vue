@@ -88,42 +88,45 @@ export default {
 }
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+@import '~/assets/scss/variables';
+@import '~/assets/scss/mixins';
+
+$header-height: 60px;
+
 .main-container {
   height: 100vh;
   overflow: hidden;
 }
 
 .sidebar {
-  background-color: #2d3a4a;
+  background-color: $color-sidebar-bg;
   transition: width 0.3s;
   overflow: hidden;
-}
 
-.sidebar-header {
-  height: 60px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 0 16px;
-  border-bottom: 1px solid #3d4f63;
-}
+  &-header {
+    height: $header-height;
+    @include flex-between;
+    padding: 0 16px;
+    border-bottom: 1px solid $color-sidebar-border;
+  }
 
-.sidebar-title {
-  color: #fff;
-  font-size: 16px;
-  font-weight: 600;
-  white-space: nowrap;
+  &-title {
+    color: $color-bg-white;
+    font-size: 16px;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  &-menu {
+    border-right: none;
+    flex: 1;
+  }
 }
 
 .collapse-btn {
-  color: #bfcbd9 !important;
+  color: $color-sidebar-text !important;
   font-size: 18px;
-}
-
-.sidebar-menu {
-  border-right: none;
-  flex: 1;
 }
 
 .content-wrapper {
@@ -132,34 +135,32 @@ export default {
 }
 
 .header {
-  background: #fff;
+  background: $color-bg-white;
   box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  @include flex-between;
   padding: 0 24px;
-  height: 60px !important;
+  height: $header-height !important;
+
+  &-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
 }
 
 .page-title {
   font-size: 16px;
   font-weight: 600;
-  color: #303133;
-}
-
-.header-right {
-  display: flex;
-  align-items: center;
-  gap: 12px;
+  color: $color-text-primary;
 }
 
 .welcome-text {
-  color: #606266;
+  color: $color-text-regular;
   font-size: 14px;
 }
 
 .main-content {
-  background: #f0f2f5;
+  background: $color-bg-page;
   overflow-y: auto;
   padding: 20px;
 }
