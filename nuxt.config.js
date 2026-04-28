@@ -33,8 +33,12 @@ export default {
   ],
 
   axios: {
-    baseURL: 'http://localhost:8080/api',
+    baseURL: process.env.API_BASE_URL || 'http://localhost:8080/api',
     credentials: false
+  },
+
+  env: {
+    BACKEND_URL: process.env.BACKEND_URL || 'http://localhost:8080'
   },
 
   router: {

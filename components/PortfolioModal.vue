@@ -113,7 +113,7 @@ export default {
         // 將已有圖片填入 fileList
         this.fileList = (this.editData.images || []).map(img => ({
           name: img.imagePath.split('/').pop(),
-          url: 'http://localhost:8080' + img.imagePath,
+          url: (process.env.BACKEND_URL || 'http://localhost:8080') + img.imagePath,
           existingPath: img.imagePath  // 標記為已存在的圖片
         }))
         this.newFiles = []
