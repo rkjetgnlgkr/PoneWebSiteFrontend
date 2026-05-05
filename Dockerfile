@@ -12,6 +12,7 @@ COPY --from=build /app/dist /usr/share/nginx/html
 # SPA routing: all routes fall back to index.html
 RUN printf 'server {\n\
     listen 3000;\n\
+    absolute_redirect off;\n\
     root /usr/share/nginx/html;\n\
     index index.html;\n\
     location / {\n\
