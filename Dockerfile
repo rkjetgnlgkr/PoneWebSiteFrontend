@@ -4,8 +4,7 @@ WORKDIR /app
 COPY package*.json ./
 RUN npm ci --legacy-peer-deps
 COPY . .
-RUN npm run generate && \
-    find /app/dist -mindepth 1 -maxdepth 1 -type d ! -name '_nuxt' -exec rm -rf {} \;
+RUN npm run generate && rm -rf /app/dist/login /app/dist/portfolio
 
 # ── Stage 2: Serve with nginx ─────────────────────────────────────────────────
 FROM nginx:alpine
