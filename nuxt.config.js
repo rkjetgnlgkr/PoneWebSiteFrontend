@@ -47,5 +47,19 @@ export default {
 
   build: {
     transpile: [/^element-ui/]
+  },
+
+  hooks: {
+    'generate:done': (generator) => {
+      const fs = require('fs')
+      const path = require('path')
+      const distDir = generator.distPath
+      fs.readdirSync(distDir).forEach((name) => {
+        const full = path.join(distDir, name)
+        if (fs.statSync(full).isDirectory() && name !== '_nuxt') {
+          fs.rmSync(full, { recursive: true, force: true })
+        }
+      })
+    }
   }
 }
