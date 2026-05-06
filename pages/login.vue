@@ -74,6 +74,14 @@
           <el-input v-model="registerForm.nickname" placeholder="選填" />
         </el-form-item>
 
+        <el-form-item label="電話">
+          <el-input v-model="registerForm.phone" placeholder="選填" />
+        </el-form-item>
+
+        <el-form-item label="電子郵件">
+          <el-input v-model="registerForm.email" placeholder="選填" />
+        </el-form-item>
+
         <el-form-item label="密碼" prop="password">
           <el-input
             v-model="registerForm.password"
@@ -128,6 +136,8 @@ export default {
       registerForm: {
         username: '',
         nickname: '',
+        phone: '',
+        email: '',
         password: '',
         confirmPassword: ''
       },
@@ -179,6 +189,8 @@ export default {
     resetRegisterForm () {
       this.$refs.registerForm && this.$refs.registerForm.resetFields()
       this.registerForm.nickname = ''
+      this.registerForm.phone = ''
+      this.registerForm.email = ''
     },
     handleRegister () {
       this.$refs.registerForm.validate(async (valid) => {
@@ -188,6 +200,8 @@ export default {
           const payload = {
             username: this.registerForm.username,
             nickname: this.registerForm.nickname || null,
+            phone: this.registerForm.phone || null,
+            email: this.registerForm.email || null,
             password: this.registerForm.password
           }
           const res = await this.$axios.post('/auth/register', payload)

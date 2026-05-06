@@ -25,6 +25,10 @@
           <i class="el-icon-picture-outline" />
           <span slot="title">作品集</span>
         </el-menu-item>
+        <el-menu-item index="/users">
+          <i class="el-icon-user" />
+          <span slot="title">使用者</span>
+        </el-menu-item>
       </el-menu>
     </el-aside>
 
@@ -68,7 +72,8 @@ export default {
     },
     pageTitle () {
       const titles = {
-        '/portfolio': '作品集'
+        '/portfolio': '作品集',
+        '/users': '使用者'
       }
       return titles[this.$route.path] || ''
     }
