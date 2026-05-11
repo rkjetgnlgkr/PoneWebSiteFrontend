@@ -38,7 +38,8 @@ export default {
   },
 
   env: {
-    BACKEND_URL: process.env.BACKEND_URL || 'http://localhost:8080'
+    BACKEND_URL: process.env.BACKEND_URL || 'http://localhost:8080',
+    GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID || ''
   },
 
   router: {
