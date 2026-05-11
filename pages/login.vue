@@ -49,6 +49,12 @@
           <span>還沒有帳號？</span>
           <el-button type="text" @click="openRegisterModal">立即註冊</el-button>
         </div>
+
+        <div class="divider">
+          <span>或</span>
+        </div>
+
+        <div id="google-signin-btn" class="google-btn-wrapper" />
       </el-form>
     </div>
 
@@ -113,6 +119,11 @@
 export default {
   name: 'LoginPage',
   layout: 'login',
+  head () {
+    return {
+      script: [{ src: 'https://accounts.google.com/gsi/client', async: true, defer: true }]
+    }
+  },
   data () {
     const validateConfirmPassword = (rule, value, callback) => {
       if (value !== this.registerForm.password) {
@@ -141,6 +152,7 @@ export default {
         password: '',
         confirmPassword: ''
       },
+      googleLoading: false,
       registerRules: {
         username: [
           { required: true, message: '請輸入帳號', trigger: 'blur' },
@@ -157,7 +169,45 @@ export default {
       }
     }
   },
+  mounted () {
+    this.initGoogleSignIn()
+  },
   methods: {
+    initGoogleSignIn (retryCount = 0) {
+      if (window.google && window.google.accounts) {
+        window.google.accounts.id.initialize({
+          client_id: process.env.GOOGLE_CLIENT_ID,
+          callback: this.handleGoogleCredential
+        })
+        window.google.accounts.id.renderButton(
+          document.getElementById('google-signin-btn'),
+          { theme: 'outline', size: 'large', width: 320, text: 'signin_with', locale: 'zh_TW' }
+        )
+      } else if (retryCount < 20) {
+        setTimeout(() => this.initGoogleSignIn(retryCount + 1), 100)
+      }
+    },
+    async handleGoogleCredential ({ credential }) {
+      this.googleLoading = true
+      try {
+        const res = await this.$axios.post('/auth/google', { idToken: credential })
+        if (res.data.code === 200) {
+          this.$store.commit('SET_AUTH', {
+            token: res.data.data.token,
+            username: res.data.data.username
+          })
+          this.$message.success('Google 登入成功')
+          this.$router.push('/portfolio')
+        } else {
+          this.$message.error(res.data.message || 'Google 登入失敗')
+        }
+      } catch (err) {
+        const msg = err.response?.data?.message || 'Google 登入失敗，請稍後再試'
+        this.$message.error(msg)
+      } finally {
+        this.googleLoading = false
+      }
+    },
     handleLogin () {
       if (this.loading) return
       this.loading = true
@@ -312,5 +362,30 @@ export default {
     padding: 0;
     font-size: 14px;
   }
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  margin: 20px 0 16px;
+  color: $color-text-secondary;
+  font-size: 13px;
+
+  &::before,
+  &::after {
+    content: '';
+    flex: 1;
+    border-top: 1px solid #e0e0e0;
+  }
+
+  span {
+    margin: 0 12px;
+  }
+}
+
+.google-btn-wrapper {
+  display: flex;
+  justify-content: center;
+  min-height: 44px;
 }
 </style>
