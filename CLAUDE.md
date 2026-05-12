@@ -34,6 +34,7 @@ npm run generate   # Generate static files
 - `axios.baseURL`: `http://localhost:8080/api` — change this for different environments
 - `router.middleware: ['auth']` — auth guard is global, applied to all routes
 - Element UI registered via `plugins/element-ui.js` with default size `medium`
+- `env.GOOGLE_CLIENT_ID`: Google OAuth 2.0 Client ID，需設定才能使用 Google 登入按鈕（啟動時傳入：`GOOGLE_CLIENT_ID=xxx npm run dev`）
 
 ## API Contract
 
@@ -43,6 +44,7 @@ The frontend expects these backend endpoints at the configured baseURL:
 |--------|------|-------|
 | POST | `/auth/login` | Returns `{ data: { token, username } }` |
 | POST | `/auth/register` | Register new user |
+| POST | `/auth/google` | Google OAuth login — send `{ idToken }`, returns `{ data: { token, username } }` |
 | GET | `/portfolios` | Returns `{ data: [...] }` array |
 | POST | `/portfolios` | Create portfolio |
 | PUT | `/portfolios/{id}` | Update portfolio |
