@@ -18,6 +18,7 @@ npm run generate   # Generate static files
 **Routes**:
 - `/login` — uses `login` layout (full-screen gradient background)
 - `/portfolio` — uses `default` layout (collapsible sidebar + header)
+- `/settings` — uses `default` layout；版面設定頁，含主題風格下拉（`dark_star / nature / terminal`）與儲存按鈕，載入時呼叫 `GET /settings`，儲存時呼叫 `PUT /settings`
 - `/` — empty index page, immediately redirected by auth middleware
 
 **Auth flow**: `middleware/auth.js` fires on every route change → restores Vuex state from localStorage via `RESTORE_AUTH` → redirects unauthenticated users to `/login`, or authenticated users away from `/login` to `/portfolio`. Axios interceptor in `plugins/axios.js` attaches `Authorization: Bearer <token>` to every request and handles 401 by calling `CLEAR_AUTH` and redirecting to login.
@@ -50,5 +51,7 @@ The frontend expects these backend endpoints at the configured baseURL:
 | PUT | `/portfolios/{id}` | Update portfolio |
 | DELETE | `/portfolios/{id}` | Delete portfolio |
 | POST | `/files` | Multipart upload, returns `{ data: ['/api/files/uuid.ext', ...] }` |
+| GET | `/settings` | Returns `{ data: { themeStyle } }`，查無記錄時回傳預設 `dark_star` |
+| PUT | `/settings` | 儲存主題風格，body: `{ themeStyle }` |
 
 All responses follow the `Result<T>` wrapper: `{ code, message, data }`.
