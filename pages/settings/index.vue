@@ -34,10 +34,9 @@ export default {
         themeStyle: 'default'
       },
       themeOptions: [
-        { value: 'default', label: '預設' },
-        { value: 'dark', label: '深色' },
-        { value: 'blue', label: '藍色' },
-        { value: 'green', label: '綠色' }
+        { value: 'dark_star', label: '深色星空' },
+        { value: 'nature', label: '自然' },
+        { value: 'terminal', label: '終端機' }
       ]
     }
   },
