@@ -18,7 +18,7 @@ npm run generate   # Generate static files
 **Routes**:
 - `/login` — uses `login` layout (full-screen gradient background)
 - `/portfolio` — uses `default` layout (collapsible sidebar + header)
-- `/settings` — uses `default` layout；版面設定頁，含主題風格下拉（`dark_star / nature / terminal`）與儲存按鈕，載入時呼叫 `GET /settings`，儲存時呼叫 `PUT /settings`
+- `/settings` — uses `default` layout；分兩張 card：①大頭貼上傳（`el-upload auto-upload:false`，選圖後本地預覽，確認後 `POST /profile/avatar`）；②版面設定（主題風格下拉 `dark_star / nature / terminal`，載入 `GET /settings`，儲存 `PUT /settings`）；頁面建立時同時呼叫 `fetchProfile` 取得現有 avatar URL
 - `/` — empty index page, immediately redirected by auth middleware
 
 **Auth flow**: `middleware/auth.js` fires on every route change → restores Vuex state from localStorage via `RESTORE_AUTH` → redirects unauthenticated users to `/login`, or authenticated users away from `/login` to `/portfolio`. Axios interceptor in `plugins/axios.js` attaches `Authorization: Bearer <token>` to every request and handles 401 by calling `CLEAR_AUTH` and redirecting to login.
@@ -53,5 +53,7 @@ The frontend expects these backend endpoints at the configured baseURL:
 | POST | `/files` | Multipart upload, returns `{ data: ['/api/files/uuid.ext', ...] }` |
 | GET | `/settings` | Returns `{ data: { themeStyle } }`，查無記錄時回傳預設 `dark_star` |
 | PUT | `/settings` | 儲存主題風格，body: `{ themeStyle }` |
+| GET | `/profile` | 取得登入使用者完整資料（含 `title`, `bio`, `avatar`, `location`） |
+| POST | `/profile/avatar` | 上傳大頭貼（multipart `file`），回傳 `{ data: '/api/files/...' }` |
 
 All responses follow the `Result<T>` wrapper: `{ code, message, data }`.
