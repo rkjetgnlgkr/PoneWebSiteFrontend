@@ -113,7 +113,7 @@ export default {
         // 將已有圖片填入 fileList
         this.fileList = (this.editData.images || []).map(img => ({
           name: img.imagePath.split('/').pop(),
-          url: (process.env.BACKEND_URL || 'http://localhost:8080') + img.imagePath,
+          url: this.getImageUrl(img.imagePath),
           existingPath: img.imagePath  // 標記為已存在的圖片
         }))
         this.newFiles = []
@@ -121,6 +121,11 @@ export default {
     }
   },
   methods: {
+    getImageUrl (path) {
+      if (!path) return ''
+      if (path.startsWith('http')) return path
+      return (process.env.BACKEND_URL || 'http://localhost:8080') + path
+    },
     handleFileChange (file, fileList) {
       // 只收集 raw File 物件（新上傳的）
       this.fileList = fileList
