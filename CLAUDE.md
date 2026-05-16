@@ -27,7 +27,7 @@ npm run generate   # Generate static files
 
 **PortfolioModal** (`components/PortfolioModal.vue`): shared for both create and edit. Controlled via `value` prop (v-model for visibility) and `editData` prop (null = create mode, object = edit mode). Image upload uses `el-upload` with `auto-upload: false` — files are held locally and only uploaded to `POST /files` at save time, then paths are included in the portfolio payload.
 
-**Image URLs** (`pages/portfolio/index.vue` → `getImageUrl()`): handles both relative paths returned by the backend (`/api/files/...`) by prepending `http://localhost:8080`, and absolute URLs left as-is.
+**Image URLs** (`pages/portfolio/index.vue` and `components/PortfolioModal.vue` both define `getImageUrl(path)`): returns path as-is if it starts with `http` (absolute URL stored by new UPLOAD_URL_PREFIX feature); otherwise prepends `process.env.BACKEND_URL || 'http://localhost:8080'` for relative paths.
 
 ## Key Configuration
 
