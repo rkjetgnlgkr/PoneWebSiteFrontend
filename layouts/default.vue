@@ -25,6 +25,14 @@
           <i class="el-icon-picture-outline" />
           <span slot="title">作品集</span>
         </el-menu-item>
+        <el-menu-item index="/skills">
+          <i class="el-icon-medal" />
+          <span slot="title">專業技能</span>
+        </el-menu-item>
+        <el-menu-item index="/work-experiences">
+          <i class="el-icon-office-building" />
+          <span slot="title">工作經歷</span>
+        </el-menu-item>
         <el-menu-item index="/users">
           <i class="el-icon-user" />
           <span slot="title">使用者</span>
@@ -77,6 +85,8 @@ export default {
     pageTitle () {
       const titles = {
         '/portfolio': '作品集',
+        '/skills': '專業技能',
+        '/work-experiences': '工作經歷',
         '/users': '使用者',
         '/settings': '版面設定'
       }
