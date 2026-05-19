@@ -10,8 +10,9 @@ export default function ({ store, redirect, route }) {
   }
 
   const isLoginPage = route.path === '/login'
+  const isLineCallback = route.path === '/line-callback'
 
-  if (!isLoggedIn && !isLoginPage) {
+  if (!isLoggedIn && !isLoginPage && !isLineCallback) {
     return redirect('/login')
   }
 
