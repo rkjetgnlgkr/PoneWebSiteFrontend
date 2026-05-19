@@ -55,6 +55,15 @@
         </div>
 
         <div id="google-signin-btn" class="google-btn-wrapper" />
+
+        <button class="line-login-btn" @click="handleLineLogin">
+          <svg class="line-icon" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect width="48" height="48" rx="10" fill="white"/>
+            <path d="M24 8C15.163 8 8 14.328 8 22.084c0 6.996 6.204 12.854 14.594 13.896.568.122 1.342.374 1.538.858.176.44.115 1.13.056 1.576l-.248 1.494c-.076.44-.35 1.724 1.51.94 1.858-.786 10.02-5.9 13.672-10.1C41.614 27.73 40 24.998 40 22.084 40 14.328 32.837 8 24 8z" fill="#06C755"/>
+            <path d="M20.5 25.5h-3a.5.5 0 01-.5-.5v-7a.5.5 0 011 0v6.5h2.5a.5.5 0 010 1zM22.5 25a.5.5 0 01-1 0v-7a.5.5 0 011 0v7zM30.5 25a.5.5 0 01-.4.49L26 19.63V25a.5.5 0 01-1 0v-7a.5.5 0 01.9-.31l4.1 5.86V18a.5.5 0 011 0v7zM35.5 20.5h-2.5V22h2.5a.5.5 0 010 1h-2.5v1.5h2.5a.5.5 0 010 1H32.5a.5.5 0 01-.5-.5v-7a.5.5 0 01.5-.5h3a.5.5 0 010 1z" fill="white"/>
+          </svg>
+          <span>使用 LINE 帳號登入</span>
+        </button>
       </el-form>
     </div>
 
@@ -173,6 +182,18 @@ export default {
     this.initGoogleSignIn()
   },
   methods: {
+    handleLineLogin () {
+      const clientId = process.env.LINE_CHANNEL_ID
+      if (!clientId) {
+        this.$message.error('LINE 登入尚未設定，請聯繫管理員')
+        return
+      }
+      const redirectUri = encodeURIComponent(`${window.location.origin}/line-callback`)
+      const state = Math.random().toString(36).substring(2)
+      sessionStorage.setItem('line_oauth_state', state)
+      const url = `https://access.line.me/oauth2/v2.1/authorize?response_type=code&client_id=${clientId}&redirect_uri=${redirectUri}&state=${state}&scope=profile`
+      window.location.href = url
+    },
     initGoogleSignIn (retryCount = 0) {
       if (window.google && window.google.accounts) {
         window.google.accounts.id.initialize({
@@ -387,5 +408,33 @@ export default {
   display: flex;
   justify-content: center;
   min-height: 44px;
+}
+
+.line-login-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  height: 44px;
+  margin-top: 12px;
+  background-color: #06C755;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  color: #fff;
+  transition: opacity 0.2s;
+
+  &:hover {
+    opacity: 0.88;
+  }
+
+  .line-icon {
+    width: 28px;
+    height: 28px;
+    flex-shrink: 0;
+  }
 }
 </style>
