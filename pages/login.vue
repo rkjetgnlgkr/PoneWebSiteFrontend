@@ -56,7 +56,7 @@
 
         <div id="google-signin-btn" class="google-btn-wrapper" />
 
-        <button class="line-login-btn" @click="handleLineLogin">
+        <button type="button" class="line-login-btn" @click="handleLineLogin">
           <svg class="line-icon" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
             <rect width="48" height="48" rx="10" fill="white"/>
             <path d="M24 8C15.163 8 8 14.328 8 22.084c0 6.996 6.204 12.854 14.594 13.896.568.122 1.342.374 1.538.858.176.44.115 1.13.056 1.576l-.248 1.494c-.076.44-.35 1.724 1.51.94 1.858-.786 10.02-5.9 13.672-10.1C41.614 27.73 40 24.998 40 22.084 40 14.328 32.837 8 24 8z" fill="#06C755"/>
