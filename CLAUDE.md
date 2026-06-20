@@ -19,9 +19,12 @@ npm run generate   # Generate static files
 - `/login` — uses `login` layout (full-screen gradient background)
 - `/portfolio` — uses `default` layout (collapsible sidebar + header)
 - `/settings` — uses `default` layout；分兩張 card：①大頭貼上傳（`el-upload auto-upload:false`，選圖後本地預覽，確認後 `POST /profile/avatar`）；②版面設定（主題風格下拉 `dark_star / nature / terminal`，載入 `GET /settings`，儲存 `PUT /settings`）；頁面建立時同時呼叫 `fetchProfile` 取得現有 avatar URL
+- `/skills` — uses `default` layout；技能管理列表（表格 + 新增/編輯經由 `components/SkillModal.vue`），對應後端 `/skills` CRUD
+- `/work-experiences` — uses `default` layout；工作經歷管理列表（表格 + 新增/編輯經由 `components/WorkExperienceModal.vue`），對應後端 `/work-experiences` CRUD
+- `/line-callback` — uses `login` layout；LINE 登入 OAuth 回呼頁，驗證 `state`（比對 sessionStorage 的 `line_oauth_state`）後以 query 的 `code` 呼叫 `POST /auth/line`，成功則 `SET_AUTH` 並導向 `/portfolio`
 - `/` — empty index page, immediately redirected by auth middleware
 
-**Auth flow**: `middleware/auth.js` fires on every route change → restores Vuex state from localStorage via `RESTORE_AUTH` → redirects unauthenticated users to `/login`, or authenticated users away from `/login` to `/portfolio`. Axios interceptor in `plugins/axios.js` attaches `Authorization: Bearer <token>` to every request and handles 401 by calling `CLEAR_AUTH` and redirecting to login.
+**Auth flow**: `middleware/auth.js` fires on every route change → restores Vuex state from localStorage via `RESTORE_AUTH` → redirects unauthenticated users to `/login` (except `/login` and `/line-callback`, which are exempt), or authenticated users away from `/login` to `/portfolio`. Axios interceptor in `plugins/axios.js` attaches `Authorization: Bearer <token>` to every request and handles 401 by calling `CLEAR_AUTH` and redirecting to login.
 
 **Vuex store** (`store/index.js`): holds `token` and `username`. Persisted to localStorage via `SET_AUTH`/`CLEAR_AUTH` mutations. `nuxtClientInit` action restores state on app boot.
 
@@ -36,6 +39,7 @@ npm run generate   # Generate static files
 - `router.middleware: ['auth']` — auth guard is global, applied to all routes
 - Element UI registered via `plugins/element-ui.js` with default size `medium`
 - `env.GOOGLE_CLIENT_ID`: Google OAuth 2.0 Client ID，需設定才能使用 Google 登入按鈕（啟動時傳入：`GOOGLE_CLIENT_ID=xxx npm run dev`）
+- `env.LINE_CHANNEL_ID`: LINE Login channel ID，需設定才能使用 LINE 登入按鈕（登入頁據此組 OAuth authorize URL，回呼至 `/line-callback`）
 
 ## API Contract
 
@@ -46,11 +50,20 @@ The frontend expects these backend endpoints at the configured baseURL:
 | POST | `/auth/login` | Returns `{ data: { token, username } }` |
 | POST | `/auth/register` | Register new user |
 | POST | `/auth/google` | Google OAuth login — send `{ idToken }`, returns `{ data: { token, username } }` |
+| POST | `/auth/line` | LINE OAuth login — send `{ code, redirectUri }`, returns `{ data: { token, username } }` |
 | GET | `/portfolios` | Returns `{ data: [...] }` array |
 | POST | `/portfolios` | Create portfolio |
 | PUT | `/portfolios/{id}` | Update portfolio |
 | DELETE | `/portfolios/{id}` | Delete portfolio |
 | POST | `/files` | Multipart upload, returns `{ data: ['/api/files/uuid.ext', ...] }` |
+| GET | `/skills` | Returns `{ data: [...] }` 技能列表 |
+| POST | `/skills` | Create skill |
+| PUT | `/skills/{id}` | Update skill |
+| DELETE | `/skills/{id}` | Delete skill |
+| GET | `/work-experiences` | Returns `{ data: [...] }` 工作經歷列表 |
+| POST | `/work-experiences` | Create work experience |
+| PUT | `/work-experiences/{id}` | Update work experience |
+| DELETE | `/work-experiences/{id}` | Delete work experience |
 | GET | `/settings` | Returns `{ data: { themeStyle } }`，查無記錄時回傳預設 `dark_star` |
 | PUT | `/settings` | 儲存主題風格，body: `{ themeStyle }` |
 | GET | `/profile` | 取得登入使用者完整資料（含 `title`, `bio`, `avatar`, `location`） |
